@@ -1,81 +1,49 @@
-Yahoo! Fantasy API Node Module
-======
+## Notice
 
-This is a node module created to wrap the Yahoo! Fantasy Sports API ([link](https://developer.yahoo.com/fantasysports/guide/index.html)). At the moment, not all subresources are available, nor are any of the 'collection' elements. I do hope to add them, and they have been added to the code, but as of now this project is very much in an open beta phase.
+This repository is forked from [whatadewitt/yfsapi](https://github.com/whatadewitt/yfsapi). I removed the authentication process for OAuth 2.0.
+Detail changes are below.
 
-The API is designed to act as a helper for those interacting with the Y! Fantasy API. The goal is for ease of use for the user, both in terms of querying endpoints and parsing responses. I've noticed that in working with the API, the data is not always the easiest to understand, so hopefully what I have created here will help people out.
+* Change all `http://` urls to `https://` urls.
+* Replace `https` module of `request` module for https request.
+* Remove OAuth 1.0 module.
+* Remove consumer-key, comsumer-secret, yuser-secret and yuser-sessionHandle.
+  * We do not need these variables anymore.
+  * External OAuth 2.0 application must handle them.
+* Remove the codes to refresh userToken.
+  * External app using OAuth 2.0 must handle it.
+  * Set set new token using setUserToken API.
 
-Installation
--------
-You can install the module via npm by running:
+## Installation
 
-    $ npm install yahoo-fantasy
+```bash
+$ npm install yahoo-fantasy-without-auth
+```
 
-Usage Note
--------
-I've created a customized version of the [Passport Strategy for Yahoo! OAuth](https://github.com/whatadewitt/passport-yahoo-oauth) to help me when I developed this module. It's a fork of the strategy on the PassportJS homepage, which simply fixed a couple of issues. It would appear that the original creator is no longer supporting the strategy, and I may have missed some things, but it has worked as much as I've needed it. Please let me know if you have any questions about it.
+## How to use
 
-Licence
--------
-This module is available under the [MIT Licence](http://opensource.org/licenses/MIT)
+```javascript
+var YantasySports = require('yahoo-fantasy-without-auth');
 
-Documentation
--------
-More complete documentation can be found using the application sandbox. This sandbox is also a work in progress, but it is my hope going forward to complete it.
+var yf = new YantasySports();
 
-The API can be used by simply importing the module and querying data
+yf.setUserToken(ACCESS_TOKEN_GIVEN_BY_YAHOO);
 
-    var YahooFantasy = require('yahoo-fantasy');
-    // you can get an application key/secret by creating a new application on Yahoo!
-    var yf = new YahooFantasy(
-      Y!APPLICATION_KEY,
-      Y!APPLICATION_SECRET
-    );
+// query a resource/subresource
+yf.{resource}.{subresource} (
+  {possible argument(s)},
+  function cb(err, data) {
+    // handle error
+    // callback function
+    // do your thing
+  }
+);
+```
 
-    // if a user has logged in (not required for all endpoints)
-    yf.setUserToken(
-      Y!CLIENT_TOKEN,
-      Y!CLIENT_SECRET
-    );
+## License
 
-    // query a resource/subresource
-    yf.{resource}.{subresource} (
-      {possible argument(s)},
-      function cb(err, data) {
-        // handle error
-        // callback function
-        // do your thing
-      }
-    );
+This module is available under the [MIT License](http://opensource.org/licenses/MIT).
 
-Bugs & Issues
--------
-This project is very much still a work in progress, please report any issues via the [GitHub issues page](https://github.com/whatadewitt/yfsapi/issues).
+## Sample
 
-Changelog
--------
+Refer to [yfsapi-oauth2-sample-app](https://github.com/githubsmilo/yfsapi-oauth2-sample-app).
 
-#### 0.3.1
-  * Additional player attributes added, thanks [ryus08](https://github.com/ryus08)!
-
-#### 0.3.0
-  * Added a method to refresh the user's token if it has expired.
-
-#### 0.2.2
-  * Hotfix to fix "Teams" collection - use error first convention
-
-#### 0.2.0
-  * Made helper classes more consistent
-  * Added collections for games, leagues, players, and teams
-  * Moved to error first convention because JavaScript
-
-#### 0.1.2
-  * Added 'Team Matchups' subresource
-  * Added 'League Scoreboard' subresource
-  * Minor code cleanup and improvements
-
-#### 0.1.1
-  * Refactored module to fix a bug where user sessions were not necessarily unique because of require caching.
-
-#### 0.1
-  * Initial release.
