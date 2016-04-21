@@ -12,7 +12,7 @@ TeamResource.prototype.meta = function(teamKey, cb) {
   var self = this;
 
   this
-    .api('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/metadata?format=json')
+    .callGetRequest('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/metadata?format=json')
     .then(function(data) {
       var metadata = teamHelper.mapTeam(data.fantasy_content.team[0]);
 
@@ -27,7 +27,7 @@ TeamResource.prototype.stats = function(teamKey, cb) {
   var self = this;
 
   this
-    .api('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/stats?format=json')
+    .callGetRequest('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/stats?format=json')
     .then(function(data) {
       var stats = teamHelper.mapStats(data.fantasy_content.team[1]);
       var team = teamHelper.mapTeam(data.fantasy_content.team[0]);
@@ -45,7 +45,7 @@ TeamResource.prototype.standings = function(teamKey, cb) {
   var self = this;
 
   this
-    .api('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/standings?format=json')
+    .callGetRequest('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/standings?format=json')
     .then(function(data) {
       var standings = data.fantasy_content.team[1].team_standings;
       var team = teamHelper.mapTeam(data.fantasy_content.team[0]);
@@ -66,7 +66,7 @@ TeamResource.prototype.roster = function(teamKey, cb) { // (teamKey, week, cb)
   // 'https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/roster;weeks=' + weeks.split(',') + '?format=json'
 
   this
-    .api('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/roster?format=json')
+    .callGetRequest('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/roster?format=json')
     .then(function(data) {
       var team = teamHelper.mapTeam(data.fantasy_content.team[0]);
       var roster = teamHelper.mapRoster(data.fantasy_content.team[1].roster);
@@ -85,7 +85,7 @@ TeamResource.prototype.draft_results = function(teamKey, cb) {
   var self = this;
 
   this
-    .api('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/draftresults?format=json')
+    .callGetRequest('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/draftresults?format=json')
     .then(function(data) {
       var draft_results = teamHelper.mapDraft(data.fantasy_content.team[1].draft_results);
       var team = teamHelper.mapTeam(data.fantasy_content.team[0]);
@@ -105,7 +105,7 @@ TeamResource.prototype.matchups = function(teamKey, cb) {
   var self = this;
 
   this
-    .api('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/matchups?format=json')
+    .callGetRequest('https://fantasysports.yahooapis.com/fantasy/v2/team/' + teamKey + '/matchups?format=json')
     .then(function(data) {
       var matchups = teamHelper.mapMatchups(data.fantasy_content.team[1].matchups);
       var team = teamHelper.mapTeam(data.fantasy_content.team[0]);

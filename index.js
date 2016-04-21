@@ -17,8 +17,8 @@ var request = require('request'),
   playersCollection = require('./collections/playersCollection.js'),
   gamesCollection = require('./collections/gamesCollection.js'),
   teamsCollection = require('./collections/teamsCollection.js'),
-  leaguesCollection = require('./collections/leaguesCollection.js');
-  // transactionsCollection = require('./collections/transactionsCollection.js')
+  leaguesCollection = require('./collections/leaguesCollection.js'),
+  transactionsCollection = require('./collections/transactionsCollection.js');
   // usersCollection = require('./collections/usersCollection.js');
 
 function YahooFantasy() {
@@ -32,7 +32,7 @@ function YahooFantasy() {
     team: teamResource(),
     teams: teamsCollection(),
     transaction: transactionResource(),
-    // transactions: transactionsCollection(),
+    transactions: transactionsCollection(),
     roster: rosterResource(),
     user: userResource(),
     // users: usersCollection(),
@@ -100,6 +100,83 @@ function YahooFantasy() {
   // this.transactions.fetch = _.bind(this.transactions.fetch, this);
   // this.transactions.leagueFetch = _.bind(this.transactions.leagueFetch, this);
 
+/**
+ * @name transactions.add_player
+ *
+ * Add a player to your team.
+ *
+ * ### Example:
+ *```
+ *   ys.transactions.add_player(
+ *     'mlb.l.154',     // leagueKey
+ *     'mlb.l.154.t.7', // teamKey
+ *     'mlb.p.9098',    // addPlayerKey
+ *     function(err, data) {
+ *       // Handle error and data here.
+ *     }
+ *  );
+ *```
+ *
+ * @param {String} leagueKey {league_key}
+ * @param {String} teamKey {destination_team_key}
+ * @param {String} addPlayerKey {player_key}
+ * @param {Function} function callback function
+ * @api public
+ */
+  this.transactions.add_player = _.bind(this.transactions.add_player, this);
+
+/**
+ * @name transactions.drop_player
+ *
+ * Drop a player from your team.
+ *
+ * ### Example:
+ *```
+ *   ys.transactions.drop_player(
+ *     'mlb.l.154',     // leagueKey
+ *     'mlb.l.154.t.7', // teamKey
+ *     'mlb.p.9098',    // dropPlayerKey
+ *     function(err, data) {
+ *       // Handle error and data here.
+ *     }
+ *  );
+ *```
+ *
+ * @param {String} leagueKey {league_key}
+ * @param {String} teamKey {destination_team_key}
+ * @param {String} dropPlayerKey {player_key}
+ * @param {Function} function callback function
+ * @api public
+ */
+  this.transactions.drop_player = _.bind(this.transactions.drop_player, this);
+
+/**
+ * @name transactions.adddrop_players
+ *
+ * Add a player and drop a player simultaneously.
+ *
+ * ### Example:
+ *```
+ *   ys.transactions.drop_player(
+ *     'mlb.l.154',     // leagueKey
+ *     'mlb.l.154.t.7', // teamKey
+ *     'mlb.p.9098',    // addPlayerKey
+ *     'mlb.p.9191',    // dropPlayerKey
+ *     function(err, data) {
+ *       // Handle error and data here.
+ *     }
+ *  );
+ *```
+ *
+ * @param {String} leagueKey {league_key}
+ * @param {String} teamKey {destination_team_key}
+ * @param {String} addPlayerKey {player_key}
+ * @param {String} dropPlayerKey {player_key}
+ * @param {Function} function callback function
+ * @api public
+ */
+  this.transactions.adddrop_players = _.bind(this.transactions.adddrop_players, this);
+
   // this.users.fetch = _.bind(this.users.fetch, this);
 }
 
@@ -107,13 +184,13 @@ YahooFantasy.prototype.setUserToken = function(userToken) {
   this.yuserToken = userToken;
 };
 
-YahooFantasy.prototype.api = function(url, deferred) {
+YahooFantasy.prototype.callGetRequest = function(url, deferred) {
   var self = this;
   deferred = typeof deferred !== 'undefined' ?  deferred : Q.defer();
 
   var options = {
     url: url,
-    headers: { Authorization: 'Bearer ' + self.yuserToken },
+    headers: { 'Authorization': 'Bearer ' + self.yuserToken },
     rejectUnauthorized: false
   };
 
@@ -134,3 +211,33 @@ YahooFantasy.prototype.api = function(url, deferred) {
 
   return deferred.promise;
 };
+
+YahooFantasy.prototype.callPostRequest = function(url, xmlData, deferred) {
+  var self = this;
+  deferred = typeof deferred !== 'undefined' ?  deferred : Q.defer();
+
+  var options = {
+    url: url,
+    headers: { 'Authorization': 'Bearer ' + self.yuserToken,
+               'content-type': 'application/xml' },
+    body: xmlData
+  };
+
+  request.post(options, function(e, r, data) {
+      if (e) {
+        deferred.reject(JSON.parse(data));
+      } else {
+        try {
+          data = JSON.parse(data);
+        } catch (er) {
+          deferred.reject(er);
+        }
+
+        deferred.resolve(data);
+      }
+    }
+  );
+
+  return deferred.promise;
+};
+

@@ -34,7 +34,7 @@ LeaguesCollection.prototype.fetch = function() {
   url += '?format=json';
 
   this
-    .api(url)
+    .callGetRequest(url)
     .then(function(data) {
       var leagues = leagueHelper.parseCollection(data.fantasy_content.leagues, subresources);
 
