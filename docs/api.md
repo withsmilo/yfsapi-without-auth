@@ -1071,5 +1071,84 @@ yf.teams.games(
 * *draftresults* 
 * *matchups* 
 
+* * *
+# transactions
+
+TBD
+
+## transactions.add_player 
+### How To Use:
+
+Add a player to your team.
+
+```
+yf.transactions.add_player(
+  league_key,
+  team_key,
+  player_key,
+  function(err, data) {
+    if (err)
+      // handle error
+      // do your thing
+  }
+);
+```
+
+### Params:
+
+* *league_key* League key format: {game_key}.l.{league_id}
+* *team_key* Team key format: {game_key}.l.{league_id}.t.{team_id}
+* *player_key* Player key format: {game_key}.p.{player_key}
+
+## transactions.drop_player 
+### How To Use:
+
+Drop a player to your team.
+
+```
+yf.transactions.drop_player(
+  league_key,
+  team_key,
+  player_key,
+  function(err, data) {
+    if (err)
+      // handle error
+      // do your thing
+  }
+);
+```
+
+### Params:
+
+* *league_key* League key format: {game_key}.l.{league_id}
+* *team_key* Team key format: {game_key}.l.{league_id}.t.{team_id}
+* *player_key* Player key format: {game_key}.p.{player_key}
+
+## transactions.adddrop_players 
+### How To Use:
+
+Add a player and drop a player simultaneously.
+
+```
+yf.transactions.adddrop_players(
+  league_key,
+  team_key,
+  player_key, // add
+  player_key, // drop
+  function(err, data) {
+    if (err)
+      // handle error
+      // do your thing
+  }
+);
+```
+
+### Params:
+
+* *league_key* League key format: {game_key}.l.{league_id}
+* *team_key* Team key format: {game_key}.l.{league_id}.t.{team_id}
+* *player_key* Player key format: {game_key}.p.{player_key}
+* *player_key* Player key format: {game_key}.p.{player_key}
+
 <!-- End index.js -->
 

@@ -1,17 +1,6 @@
 ## Notice
 
-This repository is forked from [whatadewitt/yfsapi](https://github.com/whatadewitt/yfsapi). I removed the authentication process for OAuth 2.0.
-Detail changes are below.
-
-* Change all `http://` urls to `https://` urls.
-* Replace `https` module of `request` module for https request.
-* Remove OAuth 1.0 module.
-* Remove consumer-key, comsumer-secret, yuser-secret and yuser-sessionHandle.
-  * We do not need these variables anymore.
-  * External OAuth 2.0 application must handle them.
-* Remove the codes to refresh userToken.
-  * External app using OAuth 2.0 must handle it.
-  * Set set new token using setUserToken API.
+This repository was forked from [whatadewitt/yfsapi](https://github.com/whatadewitt/yfsapi). I would like to use the [Yahoo Fantasy Sports API](https://developer.yahoo.com/fantasysports/guide) with the [Yahoo OAuth 2.0](https://developer.yahoo.com/oauth2/guide), but yfsapi contains the Yahoo OAuth 1.0 flows internally. So I removed them from yfsapi. If you have the aim to use this `yahoo-fantasy-without-auth` module, **you must implement the Yahoo OAuth 2.0 flows in your own NodeJS app and handle the refresh token on session expired.** This module needs your access token only.
 
 ## Installation
 
@@ -22,13 +11,14 @@ $ npm install yahoo-fantasy-without-auth
 ## How to use
 
 ```javascript
-var YantasySports = require('yahoo-fantasy-without-auth');
+var FantasySports = require('yahoo-fantasy-without-auth');
 
-var yf = new YantasySports();
+var yf = new FantasySports();
 
+// Set your access token given by Yahoo OAuth 2.0.
 yf.setUserToken(ACCESS_TOKEN_GIVEN_BY_YAHOO);
 
-// query a resource/subresource
+// query a resource/subresource.
 yf.{resource}.{subresource} (
   {possible argument(s)},
   function cb(err, data) {
@@ -38,6 +28,7 @@ yf.{resource}.{subresource} (
   }
 );
 ```
+Refer to [api.md](https://github.com/githubsmilo/yfsapi-without-auth/blob/master/docs/api.md) if you would like to know APIs in detail.
 
 ## License
 
@@ -45,5 +36,5 @@ This module is available under the [MIT License](http://opensource.org/licenses/
 
 ## Sample
 
-Refer to [yfsapi-oauth2-sample-app](https://github.com/githubsmilo/yfsapi-oauth2-sample-app).
+Refer to [yfsapi-oauth2-test-sandbox](https://github.com/githubsmilo/yfsapi-oauth2-test-sandbox).
 

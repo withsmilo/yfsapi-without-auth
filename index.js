@@ -1264,30 +1264,39 @@ The only required parameters are the game_key(s), and the callback function. If 
  */
   this.teams.games = _.bind(this.teams.games, this);
 
+/**
+ * * * *
+ * # transactions
+ *
+ * TBD
+ */
+
   // this.transactions.fetch = _.bind(this.transactions.fetch, this);
   // this.transactions.leagueFetch = _.bind(this.transactions.leagueFetch, this);
 
 /**
  * @name transactions.add_player
  *
+ * ### How To Use:
+ *
  * Add a player to your team.
  *
- * ### Example:
  *```
- *   ys.transactions.add_player(
- *     'mlb.l.154',     // leagueKey
- *     'mlb.l.154.t.7', // teamKey
- *     'mlb.p.9098',    // addPlayerKey
- *     function(err, data) {
- *       // Handle error and data here.
- *     }
- *  );
+ * yf.transactions.add_player(
+ *   league_key,
+ *   team_key,
+ *   player_key,
+ *   function(err, data) {
+ *     if (err)
+ *       // handle error
+ *       // do your thing
+ *   }
+ * );
  *```
  *
- * @param {String} leagueKey {league_key}
- * @param {String} teamKey {destination_team_key}
- * @param {String} addPlayerKey {player_key}
- * @param {Function} function callback function
+ * @param league_key League key format: {game_key}.l.{league_id}
+ * @param team_key Team key format: {game_key}.l.{league_id}.t.{team_id}
+ * @param player_key Player key format: {game_key}.p.{player_key}
  * @api public
  */
   this.transactions.add_player = _.bind(this.transactions.add_player, this);
@@ -1295,24 +1304,26 @@ The only required parameters are the game_key(s), and the callback function. If 
 /**
  * @name transactions.drop_player
  *
- * Drop a player from your team.
+ * ### How To Use:
  *
- * ### Example:
+ * Drop a player to your team.
+ *
  *```
- *   ys.transactions.drop_player(
- *     'mlb.l.154',     // leagueKey
- *     'mlb.l.154.t.7', // teamKey
- *     'mlb.p.9098',    // dropPlayerKey
- *     function(err, data) {
- *       // Handle error and data here.
- *     }
- *  );
+ * yf.transactions.drop_player(
+ *   league_key,
+ *   team_key,
+ *   player_key,
+ *   function(err, data) {
+ *     if (err)
+ *       // handle error
+ *       // do your thing
+ *   }
+ * );
  *```
  *
- * @param {String} leagueKey {league_key}
- * @param {String} teamKey {destination_team_key}
- * @param {String} dropPlayerKey {player_key}
- * @param {Function} function callback function
+ * @param league_key League key format: {game_key}.l.{league_id}
+ * @param team_key Team key format: {game_key}.l.{league_id}.t.{team_id}
+ * @param player_key Player key format: {game_key}.p.{player_key}
  * @api public
  */
   this.transactions.drop_player = _.bind(this.transactions.drop_player, this);
@@ -1320,26 +1331,28 @@ The only required parameters are the game_key(s), and the callback function. If 
 /**
  * @name transactions.adddrop_players
  *
+ * ### How To Use:
+ *
  * Add a player and drop a player simultaneously.
  *
- * ### Example:
  *```
- *   ys.transactions.drop_player(
- *     'mlb.l.154',     // leagueKey
- *     'mlb.l.154.t.7', // teamKey
- *     'mlb.p.9098',    // addPlayerKey
- *     'mlb.p.9191',    // dropPlayerKey
- *     function(err, data) {
- *       // Handle error and data here.
- *     }
- *  );
+ * yf.transactions.adddrop_players(
+ *   league_key,
+ *   team_key,
+ *   player_key, // add
+ *   player_key, // drop
+ *   function(err, data) {
+ *     if (err)
+ *       // handle error
+ *       // do your thing
+ *   }
+ * );
  *```
  *
- * @param {String} leagueKey {league_key}
- * @param {String} teamKey {destination_team_key}
- * @param {String} addPlayerKey {player_key}
- * @param {String} dropPlayerKey {player_key}
- * @param {Function} function callback function
+ * @param league_key League key format: {game_key}.l.{league_id}
+ * @param team_key Team key format: {game_key}.l.{league_id}.t.{team_id}
+ * @param player_key Player key format: {game_key}.p.{player_key}
+ * @param player_key Player key format: {game_key}.p.{player_key}
  * @api public
  */
   this.transactions.adddrop_players = _.bind(this.transactions.adddrop_players, this);
