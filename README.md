@@ -38,3 +38,12 @@ This module is available under the [MIT License](http://opensource.org/licenses/
 
 Refer to [yfsapi-oauth2-test-sandbox](https://github.com/githubsmilo/yfsapi-oauth2-test-sandbox).
 
+## Changed logs
+
+#### 0.3.2
+* Implement transactions' add/drop player APIs.
+* Create api.md for documentation.
+
+#### 0.3.1
+* Remove the Yahoo OAuth 1.0 flows from [yfsapi 0.3.1](https://github.com/whatadewitt/yfsapi#031).
+
