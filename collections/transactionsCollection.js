@@ -34,7 +34,7 @@ TransactionsCollection.prototype.fetch = function(transactionKeys, resources, fi
   url += '?format=json';
 
   this
-  .callGetRequest(url)
+  .api(url, 'GET', null)
   .then(function(data) {
     var meta = data.fantasy_content;
 
@@ -69,7 +69,7 @@ TransactionsCollection.prototype.leagueFetch = function(leagueKeys, resources, f
   url += '?format=json';
 
   this
-  .callGetRequest(url)
+  .api(url, 'GET', null)
   .then(function(data) {
     var meta = data.fantasy_content;
 
@@ -109,7 +109,7 @@ TransactionsCollection.prototype.add_player = function(leagueKey, teamKey, playe
     </fantasy_content>';
 
   this
-    .callPostRequest(url, xmlData)
+    .api(url, 'POST', xmlData)
     .then(function(data) {
       var contentJson = data.fantasy_content;
       var errorJson = data.error;
@@ -151,7 +151,7 @@ TransactionsCollection.prototype.drop_player = function(leagueKey, teamKey, play
     </fantasy_content>';
 
   this
-    .callPostRequest(url, xmlData)
+    .api(url, 'POST', xmlData)
     .then(function(data) {
       var contentJson = data.fantasy_content;
       var errorJson = data.error;
@@ -207,7 +207,7 @@ TransactionsCollection.prototype.adddrop_players = function(leagueKey, teamKey, 
     </fantasy_content>';
 
   this
-    .callPostRequest(url, xmlData)
+    .api(url, 'POST', xmlData)
     .then(function(data) {
       var contentJson = data.fantasy_content;
       var errorJson = data.error;

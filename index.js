@@ -1364,60 +1364,64 @@ YahooFantasy.prototype.setUserToken = function(userToken) {
   this.yuserToken = userToken;
 };
 
-YahooFantasy.prototype.callGetRequest = function(url, deferred) {
+YahooFantasy.prototype.api = function(url, method, xmlData, deferred) {
   var self = this;
   deferred = typeof deferred !== 'undefined' ?  deferred : Q.defer();
 
-  var options = {
-    url: url,
-    headers: { 'Authorization': 'Bearer ' + self.yuserToken },
-    rejectUnauthorized: false
-  };
+  if (_.isEmpty(self.yuserToken)) {
+    deferred.reject('User token is empty. Please set user token to call setUserToken API');
+    return deferred.promise;
+  }
 
-  request.get(options, function(e, r, data) {
-      if (e) {
-        deferred.reject(JSON.parse(data));
-      } else {
-        try {
-          data = JSON.parse(data);
-        } catch (er) {
-          deferred.reject(er);
+  if (method == 'GET') {
+    var options = {
+      url: url,
+      headers: { 'Authorization': 'Bearer ' + self.yuserToken },
+      rejectUnauthorized: false
+    };
+
+    request.get(options, function(e, r, data) {
+        if (e) {
+          deferred.reject(JSON.parse(data));
+        } else {
+          try {
+            data = JSON.parse(data);
+          } catch (er) {
+            deferred.reject(er);
+          }
+
+          deferred.resolve(data);
         }
-
-        deferred.resolve(data);
       }
-    }
-  );
+    );
+
+  } else if (method == 'POST') {
+    options = {
+      url: url,
+      headers: { 'Authorization': 'Bearer ' + self.yuserToken,
+                 'content-type': 'application/xml' },
+      body: xmlData
+    };
+    console.log(options);
+
+    request.post(options, function(e, r, data) {
+        if (e) {
+          deferred.reject(JSON.parse(data));
+        } else {
+          try {
+            data = JSON.parse(data);
+          } catch (er) {
+            deferred.reject(er);
+          }
+
+          deferred.resolve(data);
+        }
+      }
+    );
+
+  } else {
+    deferred.reject('Unknown method:' + method);
+  }
 
   return deferred.promise;
 };
-
-YahooFantasy.prototype.callPostRequest = function(url, xmlData, deferred) {
-  var self = this;
-  deferred = typeof deferred !== 'undefined' ?  deferred : Q.defer();
-
-  var options = {
-    url: url,
-    headers: { 'Authorization': 'Bearer ' + self.yuserToken,
-               'content-type': 'application/xml' },
-    body: xmlData
-  };
-
-  request.post(options, function(e, r, data) {
-      if (e) {
-        deferred.reject(JSON.parse(data));
-      } else {
-        try {
-          data = JSON.parse(data);
-        } catch (er) {
-          deferred.reject(er);
-        }
-
-        deferred.resolve(data);
-      }
-    }
-  );
-
-  return deferred.promise;
-};
-

@@ -12,7 +12,7 @@ TransactionResource.prototype.meta = function(transactionKey, cb) {
   var self = this;
 
   this
-    .callGetRequest('https://fantasysports.yahooapis.com/fantasy/v2/transaction/' + transactionKey + '/players?format=json')
+    .api('https://fantasysports.yahooapis.com/fantasy/v2/transaction/' + transactionKey + '/players?format=json', 'GET', null)
     .then(function(data) {
       var transaction = data.fantasy_content.transaction;
 
