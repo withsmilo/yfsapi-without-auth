@@ -1,6 +1,6 @@
 ## Notice
 
-This repository was forked from [whatadewitt/yfsapi](https://github.com/whatadewitt/yfsapi). I would like to use the [Yahoo Fantasy Sports API](https://developer.yahoo.com/fantasysports/guide) with the [Yahoo OAuth 2.0](https://developer.yahoo.com/oauth2/guide), but yfsapi contains the Yahoo OAuth 1.0 flows internally. So I removed them from yfsapi. If you have the aim to use this `yahoo-fantasy-without-auth` module, **you must implement the Yahoo OAuth 2.0 flows in your own NodeJS app and handle the refresh token on session expired.** This module needs your access token only.
+This repository was forked from [whatadewitt/yfsapi](https://github.com/whatadewitt/yfsapi). I would like to use the [Yahoo Fantasy Sports API](https://developer.yahoo.com/fantasysports/guide) with the [Yahoo OAuth 2.0](https://developer.yahoo.com/oauth2/guide), but yfsapi contains the Yahoo OAuth 1.0 flows internally. So I removed them from yfsapi. If you have the aim to use this module, `yahoo-fantasy-without-auth`, **you must implement the Yahoo OAuth 2.0 flows in your own NodeJS app and handle the refresh token on session expired.** This module needs your access token only.
 
 ## Installation
 
@@ -39,6 +39,9 @@ This module is available under the [MIT License](http://opensource.org/licenses/
 Refer to [yfsapi-oauth2-test-sandbox](https://github.com/githubsmilo/yfsapi-oauth2-test-sandbox).
 
 ## Changed logs
+
+#### 0.5.0
+* Merged with yfsapi v0.5.0.
 
 #### 0.3.2
 * Implement transactions' add/drop player APIs.
