@@ -1,20 +1,19 @@
 var _ = require('lodash');
 var gameHelper = require('../helpers/gameHelper.js');
 
-module.exports = function() {
-  return new GamesCollection();
-};
+module.exports = GamesCollection;
 
-function GamesCollection() {
-  return this;
-};
+function GamesCollection(yf) {
+  this.yf = yf;
+}
 
 // params: game keys or filters, subresources (optional), callback
 GamesCollection.prototype.fetch = function() {
-  var gameKeys = '', //arguments[0],
+  var gameKeys = '',
     subresources = '',
     filters = {},
-    cb = arguments[arguments.length - 1];
+    cb = arguments[arguments.length - 1],
+    apiCallback = this._fetch_callback.bind(this, cb);
 
   // there should be a better way...
   if ( _.isObject(arguments[0]) ) {
@@ -54,21 +53,27 @@ GamesCollection.prototype.fetch = function() {
   url += '?format=json';
 
   this
-    .api(url, 'GET', null)
-    .then(function(data) {
-      var games = gameHelper.parseCollection(data.fantasy_content.games, subresources);
+    .yf
+    .api(
+      this.yf.GET,
+      url,
+      apiCallback
+    );
+};
 
-      cb(null, games);
-    }, function(e) {
-      cb(e, null);
-    });
+GamesCollection.prototype._fetch_callback = function(cb, e, data) {
+  if ( e ) return cb(e);
+  
+  var games = gameHelper.parseCollection(data.fantasy_content.games, subresources);
+  return cb(null, games);
 };
 
 GamesCollection.prototype.user = function() {
   // no gamekeys...
   var subresources = '',
     filters = {},
-    cb = arguments[arguments.length - 1];
+    cb = arguments[arguments.length - 1],
+    apiCallback = this._user_callback.bind(this, cb);
 
   switch (arguments.length) {
     case 2:
@@ -87,7 +92,7 @@ GamesCollection.prototype.user = function() {
 
     default:
       break;
-  };
+  }
 
   var url = 'https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/games';
 
@@ -107,24 +112,28 @@ GamesCollection.prototype.user = function() {
 
   url += '?format=json';
 
-  console.log(url);
-
   this
-    .api(url, 'GET', null)
-    .then(function(data) {
-      var games = gameHelper.parseCollection(data.fantasy_content.users[0].user[1].games, subresources);
+    .yf
+    .api(
+      this.yf.GET,
+      url,
+      apiCallback
+    );
+};
 
-      cb(null, games);
-    }, function(e) {
-      cb(e, null);
-    });
+GamesCollection.prototype._user_callback = function(cb, e, data) {
+  if ( e ) return cb(e);
+  
+  var games = gameHelper.parseCollection(data.fantasy_content.users[0].user[1].games, subresources);
+  return cb(null, games);
 };
 
 GamesCollection.prototype.userFetch = function() {
   // no filters...
   var gameKeys = arguments[0],
     subresources = ( arguments.length > 2 ) ? arguments[1] : [],
-    cb = arguments[arguments.length - 1];
+    cb = arguments[arguments.length - 1],
+    apiCallback = this._userFetch_callback.bind(this, cb);
 
   var url = 'https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/games;game_keys=';
 
@@ -141,15 +150,20 @@ GamesCollection.prototype.userFetch = function() {
   url += '?format=json';
 
   this
-    .api(url, 'GET', null)
-    .then(function(data) {
-      var user = data.fantasy_content.users[0].user[0];
-      var games = gameHelper.parseCollection(data.fantasy_content.users[0].user[1].games, subresources);
+    .yf
+    .api(
+      this.yf.GET,
+      url,
+      apiCallback
+    );
+};
 
-      user.games = games;
+GamesCollection.prototype._userFetch_callback = function(cb, e, data) {
+  if ( e ) return cb(e);
+  
+  var user = data.fantasy_content.users[0].user[0];
+  var games = gameHelper.parseCollection(data.fantasy_content.users[0].user[1].games, subresources);
+  user.games = games;
 
-      cb(null, user);
-    }, function(e) {
-      cb(e, null);
-    });
+  return cb(null, user);
 };

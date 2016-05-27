@@ -6,7 +6,7 @@ exports.mapPlayer = function(player) {
     var destinationObj = {};
     var key;
 
-    if(arrayOfObjects){      
+    if(arrayOfObjects){
       _.forEach(arrayOfObjects, function(obj) {
         _.forEach(_.keys(obj), function(key) {
           if (!_.isUndefined(key)) {
@@ -15,19 +15,24 @@ exports.mapPlayer = function(player) {
         });
       });
     }
-
+    
     return destinationObj;
   };
-
+  
   var playerObj = mergeObjects(player);
 
   playerObj.eligible_positions = _.map(
     playerObj.eligible_positions,
     function(p) { return p.position; }
   );
-
-  playerObj.selected_position = mergeObjects(playerObj.selected_position);
-  playerObj.starting_status = mergeObjects(playerObj.starting_status);
+  
+  if ( playerObj.selected_position ) {
+    playerObj.selected_position = playerObj.selected_position[1].position;
+  }
+  
+  if ( playerObj.starting_status ) {
+    playerObj.starting_status = ( playerObj.starting_status ) ? playerObj.starting_status[1].is_starting : 0;
+  }
 
   return playerObj;
 };
@@ -64,7 +69,7 @@ exports.mapDraftAnalysis = function(da) {
 exports.parseCollection = function(players, subresources) {
   var self = this;
 
-  players = _.filter(players, function(p) { return typeof(p) == 'object'; });
+  players = _.filter(players, function(p) { return typeof(p) === 'object'; });
   players = _.map(players, function(p) { return p.player; });
   players = _.map(players, function(p) {
     var player = self.mapPlayer(p[0]);
@@ -101,7 +106,7 @@ exports.parseCollection = function(players, subresources) {
 exports.parseLeagueCollection = function(leagues, subresources) {
   var self = this;
 
-  leagues = _.filter(leagues, function(l) { return typeof(l) == 'object'; });
+  leagues = _.filter(leagues, function(l) { return typeof(l) === 'object'; });
   leagues = _.map(leagues, function(l) { return l.league; });
   leagues = _.map(leagues, function(l) {
     var league = l[0];
@@ -116,7 +121,7 @@ exports.parseLeagueCollection = function(leagues, subresources) {
 exports.parseTeamCollection = function(teams, subresources) {
   var self = this;
 
-  teams = _.filter(teams, function(t) { return typeof(t) == 'object'; });
+  teams = _.filter(teams, function(t) { return typeof(t) === 'object'; });
   teams = _.map(teams, function(t) { return t.team; });
   teams = _.map(teams, function(t) {
     var team = teamHelper.mapTeam(t[0]);

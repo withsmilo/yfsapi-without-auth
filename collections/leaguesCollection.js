@@ -1,19 +1,18 @@
 var _ = require('lodash');
 var leagueHelper = require('../helpers/leagueHelper.js');
 
-module.exports = function() {
-  return new LeaguesCollection();
-};
+module.exports = LeaguesCollection;
 
-function LeaguesCollection() {
-  return this;
-};
+function LeaguesCollection(yf) {
+  this.yf = yf;
+}
 
 // totally making "fetch" happen...
 LeaguesCollection.prototype.fetch = function() {
   var leagueKeys = arguments[0],
     subresources = ( arguments.length > 2 ) ? arguments[1] : [],
-    cb = arguments[arguments.length - 1];
+    cb = arguments[arguments.length - 1],
+    apiCallback = this._fetch_callback.bind(this, cb);
 
   var url = 'https://fantasysports.yahooapis.com/fantasy/v2/leagues;league_keys=';
 
@@ -34,12 +33,17 @@ LeaguesCollection.prototype.fetch = function() {
   url += '?format=json';
 
   this
-    .api(url, 'GET', null)
-    .then(function(data) {
-      var leagues = leagueHelper.parseCollection(data.fantasy_content.leagues, subresources);
+    .yf
+    .api(
+      this.yf.GET,
+      url,
+      apiCallback
+    );
+};
 
-      cb(null, leagues);
-    }, function(e) {
-      cb(e, null);
-    });
+LeaguesCollection.prototype._fetch_callback = function(cb, e, data) {
+  if ( e ) return cb(e);
+  
+  var leagues = leagueHelper.parseCollection(data.fantasy_content.leagues, subresources);
+  return cb(null, leagues);
 };
