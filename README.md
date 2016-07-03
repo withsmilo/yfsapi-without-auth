@@ -28,7 +28,7 @@ yf.{resource}.{subresource} (
   }
 );
 ```
-Refer to [api.md](https://github.com/githubsmilo/yfsapi-without-auth/blob/master/docs/api.md) if you would like to know APIs in detail.
+Refer to [api.md](https://github.com/withsmilo/yfsapi-without-auth/blob/master/docs/api.md) if you would like to know APIs in detail.
 
 ## License
 
@@ -36,7 +36,7 @@ This module is available under the [MIT License](http://opensource.org/licenses/
 
 ## Sample
 
-Refer to [yfsapi-oauth2-test-sandbox](https://github.com/githubsmilo/yfsapi-oauth2-test-sandbox).
+Refer to [yfsapi-oauth2-test-sandbox](https://github.com/withsmilo/yfsapi-oauth2-test-sandbox).
 
 ## Changed logs
 

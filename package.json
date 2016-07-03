@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/githubsmilo/yfsapi-without-auth"
+    "url": "https://github.com/withsmilo/yfsapi-without-auth"
   },
   "keywords": [
     "yahoo",
@@ -17,12 +17,12 @@
     "sports",
     "fantasy"
   ],
-  "author": "sMiLo <smilolistener@gmail.com> (http://githubsmilo.github.io)",
+  "author": "sMiLo <smilolistener@gmail.com> (http://withsmilo.github.io)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/githubsmilo/yfsapi-without-auth/issues"
+    "url": "https://github.com/withsmilo/yfsapi-without-auth/issues"
   },
-  "homepage": "https://github.com/githubsmilo/yfsapi-without-auth",
+  "homepage": "https://github.com/withsmilo/yfsapi-without-auth",
   "dependencies": {
     "istanbul": "^0.4.3",
     "jasmine-node": "^1.14.5",
