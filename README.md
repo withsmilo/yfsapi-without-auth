@@ -40,6 +40,9 @@ Refer to [yfsapi-oauth2-test-sandbox](https://github.com/withsmilo/yfsapi-oauth2
 
 ## Changed logs
 
+#### 1.0.2
+* Merged with yfsapi v1.0.2.
+
 #### 0.5.0
 * Merged with yfsapi v0.5.0.
 

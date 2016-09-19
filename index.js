@@ -70,7 +70,6 @@ YahooFantasy.prototype.api = function(method, url, postData, cb) {
       headers: { 'Authorization': 'Bearer ' + this.yuser.token },
       rejectUnauthorized: false
     };
-
     request.get(options, callback);
   }
 };

@@ -1,6 +1,6 @@
 {
   "name": "yahoo-fantasy-without-auth",
-  "version": "0.5.1",
+  "version": "1.0.2",
   "description": "NodeJS wrapper for the Yahoo! Fantasy Sports API. Needed to implement Yahoo OAuth 2.0 flows in your own app",
   "main": "index.js",
   "scripts": {
@@ -24,10 +24,10 @@
   },
   "homepage": "https://github.com/withsmilo/yfsapi-without-auth",
   "dependencies": {
-    "istanbul": "^0.4.3",
+    "istanbul": "^0.4.5",
     "jasmine-node": "^1.14.5",
-    "lodash": "^4.11.1",
-    "nock": "^3.3.2",
-    "request": "^2.72.0"
+    "lodash": "^4.16.0",
+    "nock": "^8.0.0",
+    "request": "^2.75.0"
   }
 }
